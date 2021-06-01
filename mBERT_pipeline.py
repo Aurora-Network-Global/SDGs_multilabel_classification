@@ -1,7 +1,7 @@
 # LOAD DATA
 
 import pandas as pd
-aurora_data=pd.read_hdf("C:/Datasets/aurora/50K_samples/SDGs_merged_cleaned_onehot_no_zeros_no_duplicates.h5")
+aurora_data=pd.read_hdf("/.../SDGs_merged_cleaned_onehot_no_zeros_no_duplicates.h5")
 
 # PREPARE DATA FOR mBERT
 
