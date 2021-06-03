@@ -99,32 +99,30 @@ class_weights=pd.Series(labels_counts.weight.values, index=[_ for _ in range(170
 # CREATE MODEL
 
 from transformers import TFBertModel, BertConfig
-
-config=BertConfig.from_pretrained("bert-base-multilingual-uncased", num_labels=170)
-bert=TFBertModel.from_pretrained("bert-base-multilingual-uncased", config=config)
-bert_layer=bert.layers[0]
-
 from tensorflow.keras.layers import Input, Dense
 from tensorflow.keras.initializers import TruncatedNormal
 from tensorflow.keras.models import Model
 
-input_ids_layer=Input(shape=(MAX_LEN),
+def create_model():
+    config=BertConfig.from_pretrained("bert-base-multilingual-uncased", num_labels=170)
+    bert=TFBertModel.from_pretrained("bert-base-multilingual-uncased", config=config)
+    bert_layer=bert.layers[0]
+    input_ids_layer=Input(shape=(MAX_LEN),
                         name="input_ids",
                         dtype="int32")
-
-input_attention_masks_layer=Input(shape=(MAX_LEN),
+    input_attention_masks_layer=Input(shape=(MAX_LEN),
                                     name="attention_masks",
                                     dtype="int32")
-
-bert_model=bert_layer(input_ids_layer, input_attention_masks_layer)
-
-target_layer=Dense(units=170,
+    bert_model=bert_layer(input_ids_layer, input_attention_masks_layer)
+    target_layer=Dense(units=170,
                     kernel_initializer=TruncatedNormal(stddev=config.initializer_range),
                     name="target_layer",
                     activation="sigmoid")(bert_model[1])
-
-model=Model(inputs=[input_ids_layer, input_attention_masks_layer],
+    _model=Model(inputs=[input_ids_layer, input_attention_masks_layer],
             outputs=target_layer)
+    return _model
+
+model=create_model()
 
 from tensorflow.keras.optimizers import Adam
 
