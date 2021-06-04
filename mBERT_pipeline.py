@@ -1,7 +1,7 @@
 # LOAD DATA
 
 import pandas as pd
-aurora_data=pd.read_hdf("/.../SDGs_merged_cleaned_onehot_no_zeros_no_duplicates.h5")
+aurora_data=pd.read_hdf("/.../SDGs_merged_cleaned_onehot_no_zeros_no_duplicates_no_t13.h5")
 
 # PREPARE DATA FOR mBERT
 
@@ -94,7 +94,7 @@ fig.show()
 
 labels_counts["weight"]=len(labels_counts)/labels_counts["count"]
 
-class_weights=pd.Series(labels_counts.weight.values, index=[_ for _ in range(170)]).to_dict()
+class_weights=pd.Series(labels_counts.weight.values, index=[_ for _ in range(169)]).to_dict()
 
 # CREATE MODEL
 
@@ -104,7 +104,7 @@ from tensorflow.keras.initializers import TruncatedNormal
 from tensorflow.keras.models import Model
 
 def create_model():
-    config=BertConfig.from_pretrained("bert-base-multilingual-uncased", num_labels=170)
+    config=BertConfig.from_pretrained("bert-base-multilingual-uncased", num_labels=169)
     bert=TFBertModel.from_pretrained("bert-base-multilingual-uncased", config=config)
     bert_layer=bert.layers[0]
     input_ids_layer=Input(shape=(MAX_LEN),
@@ -114,7 +114,7 @@ def create_model():
                                     name="attention_masks",
                                     dtype="int32")
     bert_model=bert_layer(input_ids_layer, input_attention_masks_layer)
-    target_layer=Dense(units=170,
+    target_layer=Dense(units=169,
                     kernel_initializer=TruncatedNormal(stddev=config.initializer_range),
                     name="target_layer",
                     activation="sigmoid")(bert_model[1])
