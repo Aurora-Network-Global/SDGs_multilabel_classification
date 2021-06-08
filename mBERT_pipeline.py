@@ -34,6 +34,7 @@ from keras.preprocessing.sequence import pad_sequences
 input_ids=pad_sequences(input_ids, maxlen=MAX_LEN, dtype="long", truncating="post", padding="post")
 
 # divide data into: train, validation, test sets
+from sklearn.model_selection import train_test_split
 train_inputs, temp_inputs, train_labels, temp_labels=train_test_split(input_ids, labels, random_state=1993, test_size=0.3)
 validation_inputs, test_inputs, validation_labels, test_labels=train_test_split(temp_inputs, temp_labels, random_state=1993, test_size=0.5)
 
