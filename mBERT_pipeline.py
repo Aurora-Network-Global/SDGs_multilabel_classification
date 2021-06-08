@@ -22,7 +22,7 @@ for abstract in abstracts:
 
 abstracts=new_abstracts
 
-MAX_LEN=400
+MAX_LEN=500
 
 tokenized_texts=[tokenizer.tokenize(sent)[:MAX_LEN] for sent in abstracts]
 
