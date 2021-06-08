@@ -143,7 +143,7 @@ model.compile(
 # TRAIN MODEL
 
 history=model.fit([train_inputs, train_masks], train_labels,
-    batch_size=2,
+    batch_size=6,
     epochs=3,
     class_weight=class_weights,
     validation_data=([validation_inputs, validation_masks], validation_labels))
