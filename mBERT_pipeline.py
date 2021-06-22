@@ -16,7 +16,7 @@ new_abstracts=[]
 
 for abstract in abstracts:
     new_abstract="[CLS] "
-    for sentence in tokenize.sent_tokenize(abstract):
+    for sentence in tokenizer.sent_tokenize(abstract):
         new_abstract=new_abstract + sentence + " [SEP] "
     new_abstracts.append(new_abstract)
 
